@@ -93,3 +93,13 @@ layers:
                 points:
                     texture: symbols/amenity/restaurant.svg
 
+    water-areas:
+        data: { source: tegola }
+        draw:
+            polygons:
+                order: 1
+                color: blue
+            lines:
+                color: blue
+                width: 0.75
+                order: 2
