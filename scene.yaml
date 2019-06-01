@@ -1,0 +1,41 @@
+cameras:
+    camera1:
+        type: perspective
+
+sources:
+    tegola:
+        type: MVT
+        url: http://localhost:9090/maps/osm/{z}/{x}/{y}.vector.pbf
+        max_zoom: 16
+
+layers:
+    roads-fill:
+        data: { source: tegola }
+        draw:
+            lines:
+                order: 2
+                width: 3px
+                color: gray
+
+    roads-casing:
+        data: { source: tegola }
+        draw:
+            lines:
+                order: 1
+                width: 5px
+                color: red
+
+    buildings:
+        data: { source: tegola }
+        draw:
+            polygons:
+                order: 1
+                color: yellow
+
+    trees:
+        data: { source: nextzen }
+        draw:
+            points:
+                order: 1
+                color: green
+
