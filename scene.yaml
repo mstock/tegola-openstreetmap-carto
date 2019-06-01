@@ -92,6 +92,27 @@ layers:
             draw:
                 points:
                     texture: symbols/amenity/restaurant.svg
+        doctors:
+            filter:
+                feature: amenity_doctors
+            draw:
+                points:
+                    texture: symbols/amenity/doctors.svg
+        clothes:
+            filter:
+                shop: clothes
+            draw:
+                points:
+                    texture: symbols/shop/clothes.svg
+
+    amenity-low-priority:
+        data: { source: tegola }
+        bench:
+            filter:
+                feature: amenity_bench
+            draw:
+                points:
+                    texture: symbols/amenity/bench.svg
 
     water-areas:
         data: { source: tegola }
