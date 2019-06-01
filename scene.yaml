@@ -1,12 +1,8 @@
-cameras:
-    camera1:
-        type: perspective
-
 sources:
     tegola:
         type: MVT
         url: http://localhost:9090/maps/osm/{z}/{x}/{y}.vector.pbf
-        max_zoom: 16
+        max_zoom: 17
 
 layers:
     roads-fill:
@@ -16,6 +12,18 @@ layers:
                 order: 2
                 width: 3px
                 color: gray
+        pedestrian:
+            filter:
+                feature: highway_pedestrian
+            draw:
+                lines:
+                    color: green
+        footway:
+            filter:
+                feature: highway_footway
+            draw:
+                lines:
+                    color: magenta
 
     roads-casing:
         data: { source: tegola }
@@ -24,18 +32,64 @@ layers:
                 order: 1
                 width: 5px
                 color: red
+        pedestrian:
+            filter:
+                feature: highway_pedestrian
+            draw:
+                lines:
+                    color: blue
 
     buildings:
         data: { source: tegola }
         draw:
             polygons:
                 order: 1
-                color: yellow
+                color: '#d9d0c9'
+            lines:
+                color: '#b9a99c'
+                width: 0.75
+                order: 2
 
     trees:
-        data: { source: nextzen }
+        data: { source: tegola }
         draw:
             points:
                 order: 1
                 color: green
+
+    addresses:
+        data: { source: tegola }
+        draw:
+            text:
+                text_source: addr_housenumber
+                font:
+                    fill: '#666'
+                    size: 10px
+                    stroke: { color: white, width: 2 }
+
+
+    amenity-points:
+        data: { source: tegola }
+        draw:
+            points:
+                order: 1
+                color: yellow
+        museum:
+            filter:
+                feature: tourism_museum
+            draw:
+                points:
+                    texture: symbols/tourism/museum.svg
+        cafe:
+            filter:
+                feature: amenity_cafe
+            draw:
+                points:
+                    texture: symbols/amenity/cafe.svg
+        restaurant:
+            filter:
+                feature: amenity_restaurant
+            draw:
+                points:
+                    texture: symbols/amenity/restaurant.svg
 
