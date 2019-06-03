@@ -1,7 +1,7 @@
 sources:
     tegola:
         type: MVT
-        url: http://localhost:9090/maps/osm/{z}/{x}/{y}.vector.pbf
+        url: http://localhost:8080/maps/osm/{z}/{x}/{y}.vector.pbf
         max_zoom: 17
 
 layers:
