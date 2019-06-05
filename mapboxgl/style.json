@@ -1,0 +1,78 @@
+{
+    "version": 8,
+    "name": "my",
+    "sources": {
+      "my": {
+        "type": "vector",
+        "url": "http://localhost:8080/capabilities/osm.json"
+      }
+    },
+    "glyphs": "./{fontstack}/{range}.pbf",
+    "layers": [
+      {
+        "id": "water",
+        "source": "my",
+        "source-layer": "water-areas",
+        "type": "fill",
+        "minzoom": 1,
+        "paint": {
+          "fill-color": "#00ffff"
+        }
+      },
+      {
+        "id": "buildings",
+        "source": "my",
+        "source-layer": "buildings",
+        "type": "fill",
+        "minzoom": 14,
+        "paint": {
+          "fill-color": "#101000"
+        }
+      },
+      {
+        "id": "roads-casing",
+        "source": "my",
+        "source-layer": "roads-casing",
+        "type": "line",
+        "minzoom": 14,
+        "paint": {
+          "line-color": "#000000",
+          "line-width": 4
+        }
+      },
+      {
+        "id": "roads-fill",
+        "source": "my",
+        "source-layer": "roads-fill",
+        "type": "line",
+        "minzoom": 14,
+        "paint": {
+          "line-color": "#ffffaa",
+          "line-width": 3
+        }
+      },
+      {
+        "id": "roads-low-zoom",
+        "source": "my",
+        "source-layer": "roads-low-zoom",
+        "type": "line",
+        "maxzoom": 14,
+        "paint": {
+          "line-color": "#000000",
+          "line-width": 1
+        }
+      },
+      {
+        "id": "roads-text-name",
+        "source": "my",
+        "source-layer": "roads-text-name",
+        "type": "symbol",
+        "minzoom": 14,
+        "layout": {
+          "text-field": ["get", "name"],
+          "text-font": ["noto"],
+          "symbol-placement": "line"
+        }
+      }
+    ]
+}
