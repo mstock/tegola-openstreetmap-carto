@@ -2,7 +2,7 @@ sources:
     tegola:
         type: MVT
         url: http://localhost:8080/maps/osm/{z}/{x}/{y}.vector.pbf
-        max_zoom: 17
+        max_zoom: 14
 
 layers:
     roads-fill:
@@ -52,6 +52,8 @@ layers:
 
     trees:
         data: { source: tegola }
+        filter:
+            $zoom: { min: 17 }
         draw:
             points:
                 order: 1
@@ -59,6 +61,8 @@ layers:
 
     addresses:
         data: { source: tegola }
+        filter:
+            $zoom: { min: 17 }
         draw:
             text:
                 text_source: addr_housenumber
@@ -70,6 +74,8 @@ layers:
 
     amenity-points:
         data: { source: tegola }
+        filter:
+            $zoom: { min: 16 }
         draw:
             points:
                 order: 1
@@ -107,6 +113,8 @@ layers:
 
     amenity-low-priority:
         data: { source: tegola }
+        filter:
+            $zoom: { min: 16 }
         bench:
             filter:
                 feature: amenity_bench
