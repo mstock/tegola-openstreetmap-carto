@@ -1,0 +1,627 @@
+[
+   {
+      "fields" : [
+         "feature"
+      ],
+      "name" : "landcover-low-zoom"
+   },
+   {
+      "fields" : [
+         "feature",
+         "is_building",
+         "name",
+         "religion"
+      ],
+      "name" : "landcover"
+   },
+   {
+      "fields" : [],
+      "name" : "landcover-line"
+   },
+   {
+      "fields" : [
+         "int_intermittent",
+         "int_tunnel",
+         "waterway"
+      ],
+      "name" : "water-lines-casing"
+   },
+   {
+      "fields" : [
+         "int_intermittent",
+         "waterway"
+      ],
+      "name" : "water-lines-low-zoom"
+   },
+   {
+      "fields" : [
+         "bridge",
+         "int_intermittent",
+         "int_tunnel",
+         "name",
+         "waterway"
+      ],
+      "name" : "water-lines"
+   },
+   {
+      "fields" : [
+         "int_intermittent",
+         "landuse",
+         "name",
+         "natural",
+         "waterway"
+      ],
+      "name" : "water-areas"
+   },
+   {
+      "fields" : [
+         "int_wetland",
+         "leaf_type",
+         "natural",
+         "surface"
+      ],
+      "name" : "landcover-area-symbols"
+   },
+   {
+      "fields" : [],
+      "name" : "marinas-area"
+   },
+   {
+      "fields" : [
+         "name",
+         "waterway"
+      ],
+      "name" : "water-barriers-line"
+   },
+   {
+      "fields" : [
+         "name",
+         "waterway"
+      ],
+      "name" : "water-barriers-poly"
+   },
+   {
+      "fields" : [
+         "natural"
+      ],
+      "name" : "springs"
+   },
+   {
+      "fields" : [
+         "man_made"
+      ],
+      "name" : "piers-poly"
+   },
+   {
+      "fields" : [
+         "man_made"
+      ],
+      "name" : "piers-line"
+   },
+   {
+      "fields" : [
+         "waterway"
+      ],
+      "name" : "water-barriers-point"
+   },
+   {
+      "fields" : [
+         "man_made",
+         "name"
+      ],
+      "name" : "bridge"
+   },
+   {
+      "fields" : [
+         "aerialway",
+         "aeroway",
+         "amenity",
+         "building",
+         "public_transport"
+      ],
+      "name" : "buildings"
+   },
+   {
+      "fields" : [
+         "access",
+         "bicycle",
+         "construction",
+         "feature",
+         "foot",
+         "horse",
+         "int_surface",
+         "layernotnull",
+         "link",
+         "service",
+         "tracktype"
+      ],
+      "name" : "tunnels"
+   },
+   {
+      "fields" : [
+         "landuse",
+         "military"
+      ],
+      "name" : "landuse-overlay"
+   },
+   {
+      "fields" : [
+         "name",
+         "tourism"
+      ],
+      "name" : "tourism-boundary"
+   },
+   {
+      "fields" : [
+         "feature"
+      ],
+      "name" : "line-barriers"
+   },
+   {
+      "fields" : [
+         "man_made",
+         "natural"
+      ],
+      "name" : "cliffs"
+   },
+   {
+      "fields" : [
+         "feature"
+      ],
+      "name" : "area-barriers"
+   },
+   {
+      "fields" : [],
+      "name" : "ferry-routes"
+   },
+   {
+      "fields" : [
+         "int_tc_service",
+         "int_tc_type"
+      ],
+      "name" : "turning-circle-casing"
+   },
+   {
+      "fields" : [
+         "feature"
+      ],
+      "name" : "highway-area-casing"
+   },
+   {
+      "fields" : [
+         "access",
+         "bicycle",
+         "construction",
+         "feature",
+         "foot",
+         "horse",
+         "int_surface",
+         "layernotnull",
+         "link",
+         "service",
+         "tracktype"
+      ],
+      "name" : "roads-casing"
+   },
+   {
+      "fields" : [
+         "feature"
+      ],
+      "name" : "highway-area-fill"
+   },
+   {
+      "fields" : [
+         "access",
+         "bicycle",
+         "construction",
+         "feature",
+         "foot",
+         "horse",
+         "int_surface",
+         "layernotnull",
+         "link",
+         "service",
+         "tracktype"
+      ],
+      "name" : "roads-fill"
+   },
+   {
+      "fields" : [
+         "int_tc_service",
+         "int_tc_type"
+      ],
+      "name" : "turning-circle-fill"
+   },
+   {
+      "fields" : [
+         "aerialway",
+         "name"
+      ],
+      "name" : "aerialways"
+   },
+   {
+      "fields" : [
+         "feature",
+         "int_surface",
+         "int_tunnel",
+         "link"
+      ],
+      "name" : "roads-low-zoom"
+   },
+   {
+      "fields" : [
+         "bridge",
+         "int_intermittent",
+         "int_tunnel",
+         "name",
+         "waterway"
+      ],
+      "name" : "waterway-bridges"
+   },
+   {
+      "fields" : [
+         "access",
+         "bicycle",
+         "construction",
+         "feature",
+         "foot",
+         "horse",
+         "int_surface",
+         "layernotnull",
+         "link",
+         "service",
+         "tracktype"
+      ],
+      "name" : "bridges"
+   },
+   {
+      "fields" : [],
+      "name" : "guideways"
+   },
+   {
+      "fields" : [
+         "access",
+         "entrance"
+      ],
+      "name" : "entrances"
+   },
+   {
+      "fields" : [
+         "aeroway",
+         "bridge"
+      ],
+      "name" : "aeroways"
+   },
+   {
+      "fields" : [
+         "admin_level"
+      ],
+      "name" : "admin-low-zoom"
+   },
+   {
+      "fields" : [
+         "admin_level"
+      ],
+      "name" : "admin-mid-zoom"
+   },
+   {
+      "fields" : [
+         "admin_level"
+      ],
+      "name" : "admin-high-zoom"
+   },
+   {
+      "fields" : [],
+      "name" : "power-minorline"
+   },
+   {
+      "fields" : [],
+      "name" : "power-line"
+   },
+   {
+      "fields" : [
+         "boundary",
+         "name",
+         "protect_class"
+      ],
+      "name" : "protected-areas"
+   },
+   {
+      "fields" : [
+         "natural"
+      ],
+      "name" : "trees"
+   },
+   {
+      "fields" : [
+         "name"
+      ],
+      "name" : "country-names"
+   },
+   {
+      "fields" : [
+         "dir",
+         "name",
+         "population"
+      ],
+      "name" : "capital-names"
+   },
+   {
+      "fields" : [
+         "name",
+         "ref"
+      ],
+      "name" : "state-names"
+   },
+   {
+      "fields" : [
+         "category",
+         "dir",
+         "name",
+         "score"
+      ],
+      "name" : "placenames-medium"
+   },
+   {
+      "fields" : [
+         "leisure",
+         "name",
+         "place"
+      ],
+      "name" : "placenames-small"
+   },
+   {
+      "fields" : [
+         "aerialway",
+         "name",
+         "railway",
+         "ref",
+         "station"
+      ],
+      "name" : "stations"
+   },
+   {
+      "fields" : [
+         "access",
+         "artwork_type",
+         "castle_type",
+         "denomination",
+         "feature",
+         "generator:source",
+         "height",
+         "iata",
+         "icao",
+         "information",
+         "is_building",
+         "location",
+         "memorial",
+         "name",
+         "office",
+         "operator",
+         "recycling_type",
+         "ref",
+         "religion",
+         "score",
+         "shop",
+         "sport",
+         "telescope:diameter",
+         "telescope:type",
+         "tower:construction",
+         "tower:type",
+         "vending",
+         "way_area"
+      ],
+      "name" : "amenity-points"
+   },
+   {
+      "fields" : [
+         "feature",
+         "layer",
+         "name"
+      ],
+      "name" : "amenity-line"
+   },
+   {
+      "fields" : [
+         "power"
+      ],
+      "name" : "power-towers"
+   },
+   {
+      "fields" : [
+         "height",
+         "highway",
+         "refs",
+         "width"
+      ],
+      "name" : "roads-text-ref-low-zoom"
+   },
+   {
+      "fields" : [
+         "highway",
+         "junction",
+         "name",
+         "ref"
+      ],
+      "name" : "junctions"
+   },
+   {
+      "fields" : [
+         "man_made",
+         "name"
+      ],
+      "name" : "bridge-text"
+   },
+   {
+      "fields" : [
+         "height",
+         "highway",
+         "refs",
+         "width"
+      ],
+      "name" : "roads-text-ref"
+   },
+   {
+      "fields" : [
+         "highway",
+         "leisure",
+         "name",
+         "place"
+      ],
+      "name" : "roads-area-text-name"
+   },
+   {
+      "fields" : [
+         "bicycle",
+         "construction",
+         "highway",
+         "horse",
+         "name",
+         "oneway",
+         "tunnel"
+      ],
+      "name" : "roads-text-name"
+   },
+   {
+      "fields" : [
+         "bicycle",
+         "construction",
+         "highway",
+         "horse",
+         "name",
+         "oneway"
+      ],
+      "name" : "paths-text-name"
+   },
+   {
+      "fields" : [
+         "construction",
+         "highspeed",
+         "name",
+         "railway",
+         "tunnel",
+         "usage"
+      ],
+      "name" : "railways-text-name"
+   },
+   {
+      "fields" : [
+         "feature",
+         "is_building",
+         "name"
+      ],
+      "name" : "text-poly-low-zoom"
+   },
+   {
+      "fields" : [
+         "access",
+         "feature",
+         "is_building",
+         "name",
+         "operator",
+         "ref",
+         "way_area"
+      ],
+      "name" : "text-line"
+   },
+   {
+      "fields" : [
+         "access",
+         "artwork_type",
+         "castle_type",
+         "denomination",
+         "feature",
+         "generator:source",
+         "height",
+         "iata",
+         "icao",
+         "information",
+         "is_building",
+         "location",
+         "memorial",
+         "name",
+         "office",
+         "operator",
+         "recycling_type",
+         "ref",
+         "religion",
+         "score",
+         "shop",
+         "sport",
+         "telescope:diameter",
+         "telescope:type",
+         "tower:construction",
+         "tower:type",
+         "vending",
+         "way_area"
+      ],
+      "name" : "text-point"
+   },
+   {
+      "fields" : [
+         "name"
+      ],
+      "name" : "building-text"
+   },
+   {
+      "fields" : [],
+      "name" : "interpolation"
+   },
+   {
+      "fields" : [
+         "addr_housename",
+         "addr_housenumber",
+         "addr_unit"
+      ],
+      "name" : "addresses"
+   },
+   {
+      "fields" : [
+         "int_intermittent",
+         "int_tunnel",
+         "lock",
+         "lock_name",
+         "name",
+         "natural",
+         "waterway"
+      ],
+      "name" : "water-lines-text"
+   },
+   {
+      "fields" : [
+         "name"
+      ],
+      "name" : "ferry-routes-text"
+   },
+   {
+      "fields" : [
+         "admin_level",
+         "name"
+      ],
+      "name" : "admin-text"
+   },
+   {
+      "fields" : [
+         "boundary",
+         "name",
+         "protect_class"
+      ],
+      "name" : "protected-areas-text"
+   },
+   {
+      "fields" : [
+         "access",
+         "feature",
+         "prio"
+      ],
+      "name" : "amenity-low-priority"
+   },
+   {
+      "fields" : [
+         "access",
+         "feature"
+      ],
+      "name" : "amenity-low-priority-poly"
+   }
+]
+
