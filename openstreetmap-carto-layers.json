@@ -382,6 +382,22 @@
    },
    {
       "fields" : [
+         "highway",
+         "junction",
+         "name",
+         "ref"
+      ],
+      "name" : "junctions"
+   },
+   {
+      "fields" : [
+         "man_made",
+         "name"
+      ],
+      "name" : "bridge-text"
+   },
+   {
+      "fields" : [
          "access",
          "artwork_type",
          "castle_type",
@@ -438,22 +454,6 @@
    },
    {
       "fields" : [
-         "highway",
-         "junction",
-         "name",
-         "ref"
-      ],
-      "name" : "junctions"
-   },
-   {
-      "fields" : [
-         "man_made",
-         "name"
-      ],
-      "name" : "bridge-text"
-   },
-   {
-      "fields" : [
          "height",
          "highway",
          "refs",
@@ -503,6 +503,15 @@
          "usage"
       ],
       "name" : "railways-text-name"
+   },
+   {
+      "fields" : [
+         "height",
+         "highway",
+         "refs",
+         "width"
+      ],
+      "name" : "roads-text-ref-minor"
    },
    {
       "fields" : [
@@ -612,16 +621,21 @@
       "fields" : [
          "access",
          "feature",
-         "prio"
+         "name",
+         "prio",
+         "way_area"
       ],
       "name" : "amenity-low-priority"
    },
    {
       "fields" : [
          "access",
-         "feature"
+         "feature",
+         "name",
+         "prio",
+         "way_area"
       ],
-      "name" : "amenity-low-priority-poly"
+      "name" : "text-low-priority"
    }
 ]
 
