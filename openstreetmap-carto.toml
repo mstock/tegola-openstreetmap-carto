@@ -377,14 +377,14 @@ provider_layer = "osm.text-low-priority"
 
 [[providers]]
 database = "gis"
-host = "localhost"
+host = "${PGHOST}"
 max_connections = 100
 name = "osm"
-password = "gis"
+password = "${PGPASS}"
 port = 5432
 srid = 3857
 type = "postgis"
-user = "gis"
+user = "${PGUSER}"
 
 [[providers.layers]]
 geometry_fieldname = "geom"
