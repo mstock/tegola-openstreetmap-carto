@@ -108,17 +108,12 @@ provider_layer = "osm.tourism-boundary"
 [[maps.layers]]
 max_zoom = 14
 min_zoom = 14
-provider_layer = "osm.line-barriers"
+provider_layer = "osm.barriers"
 
 [[maps.layers]]
 max_zoom = 14
 min_zoom = 13
 provider_layer = "osm.cliffs"
-
-[[maps.layers]]
-max_zoom = 14
-min_zoom = 14
-provider_layer = "osm.area-barriers"
 
 [[maps.layers]]
 max_zoom = 14
@@ -532,12 +527,11 @@ geometry_fieldname = "geom"
 geometry_type = "Polygon"
 name = "water-areas"
 sql = """
-SELECT ST_AsBinary(way) AS geom, \"natural\", \"waterway\", \"landuse\", \"name\", \"way_pixels\", \"int_intermittent\" FROM (SELECT
+SELECT ST_AsBinary(way) AS geom, \"natural\", \"waterway\", \"landuse\", \"way_pixels\", \"int_intermittent\" FROM (SELECT
     way,
     \"natural\",
     waterway,
     landuse,
-    name,
     way_area/NULLIF(POW(!scale_denominator!*0.001*0.28,2),0) AS way_pixels,
     CASE WHEN tags->'intermittent' IN ('yes')
       OR tags->'seasonal' IN ('yes', 'spring', 'summer', 'autumn', 'winter', 'wet_season', 'dry_season')
@@ -596,10 +590,9 @@ geometry_fieldname = "geom"
 geometry_type = "LineString"
 name = "water-barriers-line"
 sql = """
-SELECT ST_AsBinary(way) AS geom, \"waterway\", \"name\" FROM (SELECT
+SELECT ST_AsBinary(way) AS geom, \"waterway\" FROM (SELECT
     way,
-    waterway,
-    name
+    waterway
   FROM planet_osm_line
   WHERE waterway IN ('dam', 'weir', 'lock_gate')
 ) AS water_barriers_line WHERE way && !BBOX!"""
@@ -609,10 +602,9 @@ geometry_fieldname = "geom"
 geometry_type = "Polygon"
 name = "water-barriers-poly"
 sql = """
-SELECT ST_AsBinary(way) AS geom, \"waterway\", \"name\" FROM (SELECT
+SELECT ST_AsBinary(way) AS geom, \"waterway\" FROM (SELECT
     way,
-    waterway,
-    name
+    waterway
   FROM planet_osm_polygon
   WHERE waterway IN ('dam', 'weir', 'lock_gate')
 ) AS water_barriers_poly WHERE way && !BBOX!"""
@@ -679,11 +671,9 @@ geometry_fieldname = "geom"
 geometry_type = "Polygon"
 name = "bridge"
 sql = """
-SELECT ST_AsBinary(way) AS geom, \"way_pixels\", \"man_made\", \"name\" FROM (SELECT
+SELECT ST_AsBinary(way) AS geom, \"man_made\" FROM (SELECT
     way,
-    way_area/NULLIF(POW(!scale_denominator!*0.001*0.28,2),0) AS way_pixels,
-    man_made,
-    name
+    man_made
   FROM planet_osm_polygon
   WHERE man_made = 'bridge'
 ) AS bridge WHERE way && !BBOX!"""
@@ -813,10 +803,9 @@ geometry_fieldname = "geom"
 geometry_type = "Polygon"
 name = "tourism-boundary"
 sql = """
-SELECT ST_AsBinary(way) AS geom, \"way_pixels\", \"name\", \"tourism\" FROM (SELECT
+SELECT ST_AsBinary(way) AS geom, \"way_pixels\", \"tourism\" FROM (SELECT
     way,
     way_area/NULLIF(POW(!scale_denominator!*0.001*0.28,2),0) AS way_pixels,
-    name,
     tourism
   FROM planet_osm_polygon
   WHERE tourism = 'theme_park'
@@ -826,17 +815,34 @@ SELECT ST_AsBinary(way) AS geom, \"way_pixels\", \"name\", \"tourism\" FROM (SEL
 [[providers.layers]]
 geometry_fieldname = "geom"
 geometry_type = "LineString"
-name = "line-barriers"
+name = "barriers"
 sql = """
 SELECT ST_AsBinary(way) AS geom, \"feature\" FROM (SELECT
     way, COALESCE(historic, barrier) AS feature
-  FROM (SELECT way,
-    ('barrier_' || (CASE WHEN barrier IN ('chain', 'city_wall', 'embankment', 'ditch', 'fence', 'guard_rail',
-          'handrail', 'hedge', 'kerb', 'retaining_wall', 'wall') THEN barrier ELSE NULL END)) AS barrier,
-    ('historic_' || (CASE WHEN historic = 'citywalls' THEN historic ELSE NULL END)) AS historic
-    FROM planet_osm_line
-    WHERE barrier IN ('chain', 'city_wall', 'embankment', 'ditch', 'fence', 'guard_rail',
-          'handrail', 'hedge', 'kerb', 'retaining_wall', 'wall')
+  FROM
+    (SELECT way,
+      ('barrier_' || (CASE WHEN barrier IN ('chain', 'city_wall', 'ditch', 'fence', 'guard_rail',
+            'handrail', 'hedge', 'retaining_wall', 'wall') THEN barrier ELSE NULL END)) AS barrier,
+      ('historic_' || (CASE WHEN historic = 'citywalls' THEN historic ELSE NULL END)) AS historic
+      FROM
+        (SELECT
+            way,
+            historic,
+            barrier,
+            waterway
+          FROM planet_osm_polygon
+          WHERE way && !bbox!
+        UNION ALL
+        SELECT
+            way,
+            historic,
+            barrier,
+            waterway
+          FROM planet_osm_line
+          WHERE way && !bbox!
+        ) _
+      WHERE barrier IN ('chain', 'city_wall', 'ditch', 'fence', 'guard_rail',
+          'handrail', 'hedge', 'retaining_wall', 'wall')
       OR historic = 'citywalls'
       AND (waterway IS NULL OR waterway NOT IN ('river', 'canal', 'stream', 'drain', 'ditch'))
   ) AS features
@@ -852,25 +858,6 @@ SELECT ST_AsBinary(way) AS geom, \"natural\", \"man_made\" FROM (SELECT
   FROM planet_osm_line
   WHERE \"natural\" = 'cliff' OR man_made = 'embankment'
 ) AS cliffs WHERE way && !BBOX!"""
-
-[[providers.layers]]
-geometry_fieldname = "geom"
-geometry_type = "Polygon"
-name = "area-barriers"
-sql = """
-SELECT ST_AsBinary(way) AS geom, \"feature\" FROM (SELECT
-    way, COALESCE(historic, barrier) AS feature
-  FROM (SELECT way,
-    ('barrier_' || (CASE WHEN barrier IN ('chain', 'city_wall', 'embankment', 'ditch', 'fence', 'guard_rail',
-          'handrail', 'hedge', 'kerb', 'retaining_wall', 'wall') THEN barrier ELSE NULL END)) AS barrier,
-    ('historic_' || (CASE WHEN historic = 'citywalls' THEN historic ELSE NULL END)) AS historic
-    FROM planet_osm_polygon
-    WHERE (barrier IN ('chain', 'city_wall', 'embankment', 'ditch', 'fence', 'guard_rail',
-          'handrail', 'hedge', 'kerb', 'retaining_wall', 'wall')
-      OR historic = 'citywalls')
-      AND building IS NULL
-  ) AS features
-) AS area_barriers WHERE way && !BBOX!"""
 
 [[providers.layers]]
 geometry_fieldname = "geom"
@@ -1221,10 +1208,9 @@ geometry_fieldname = "geom"
 geometry_type = "LineString"
 name = "waterway-bridges"
 sql = """
-SELECT ST_AsBinary(way) AS geom, \"waterway\", \"name\", \"int_intermittent\", \"int_tunnel\", \"bridge\" FROM (SELECT
+SELECT ST_AsBinary(way) AS geom, \"waterway\", \"int_intermittent\", \"int_tunnel\", \"bridge\" FROM (SELECT
     way,
     waterway,
-    name,
     CASE WHEN tags->'intermittent' IN ('yes')
       OR tags->'seasonal' IN ('yes', 'spring', 'summer', 'autumn', 'winter', 'wet_season', 'dry_season')
       THEN 'yes' ELSE 'no' END AS int_intermittent,
@@ -1435,9 +1421,8 @@ geometry_fieldname = "geom"
 geometry_type = "Polygon"
 name = "protected-areas"
 sql = """
-SELECT ST_AsBinary(way) AS geom, \"name\", \"boundary\", \"protect_class\", \"way_pixels\" FROM (SELECT
+SELECT ST_AsBinary(way) AS geom, \"boundary\", \"protect_class\", \"way_pixels\" FROM (SELECT
     way,
-    name,
     boundary,
     tags->'protect_class' AS protect_class,
     way_area/NULLIF(POW(!scale_denominator!*0.001*0.28,2),0) AS way_pixels
@@ -1654,32 +1639,35 @@ SELECT ST_AsBinary(way) AS geom, \"highway\", \"junction\", \"ref\", \"name\", \
     name,
     NULL AS way_pixels
   FROM planet_osm_point
-  WHERE highway = 'motorway_junction' OR highway = 'traffic_signals' OR junction = 'yes'
+  WHERE way && !bbox!
+    AND (highway = 'motorway_junction' OR highway = 'traffic_signals' OR junction = 'yes')
 UNION ALL
   SELECT
-    way,
+    ST_PointOnSurface(way) AS way,
     highway,
     junction,
     ref,
     name,
     way_area/NULLIF(POW(!scale_denominator!*0.001*0.28,2),0) AS way_pixels
   FROM planet_osm_polygon
-  WHERE junction = 'yes'
+  WHERE way && !bbox!
+    AND junction = 'yes'
   ORDER BY way_pixels DESC NULLS LAST
 ) AS junctions WHERE way && !BBOX!"""
 
 [[providers.layers]]
 geometry_fieldname = "geom"
-geometry_type = "Polygon"
+geometry_type = "Point"
 name = "bridge-text"
 sql = """
 SELECT ST_AsBinary(way) AS geom, \"way_pixels\", \"man_made\", \"name\" FROM (SELECT
-    way,
+    ST_PointOnSurface(way) AS way,
     way_area/NULLIF(POW(!scale_denominator!*0.001*0.28,2),0) AS way_pixels,
     man_made,
     name
   FROM planet_osm_polygon
-  WHERE man_made = 'bridge'
+  WHERE way && !bbox!
+    AND man_made = 'bridge'
   ORDER BY way_area DESC
 ) AS bridge_text WHERE way && !BBOX!"""
 
@@ -1688,7 +1676,7 @@ geometry_fieldname = "geom"
 geometry_type = "Point"
 name = "amenity-points"
 sql = """
-SELECT ST_AsBinary(way) AS geom, \"name\", \"feature\", \"access\", \"score\", \"religion\", \"denomination\", \"generator:source\", \"height\", \"location\", \"icao\", \"iata\", \"office\", \"recycling_type\", \"tower:construction\", \"tower:type\", \"telescope:type\", \"telescope:diameter\", \"castle_type\", \"sport\", \"information\", \"memorial\", \"artwork_type\", \"vending\", \"shop\", \"is_building\", \"operator\", \"ref\", \"way_area\", \"way_pixels\" FROM (SELECT
+SELECT ST_AsBinary(way) AS geom, \"name\", \"parking\", \"feature\", \"access\", \"score\", \"religion\", \"denomination\", \"generator:source\", \"height\", \"location\", \"icao\", \"iata\", \"office\", \"recycling_type\", \"tower:construction\", \"tower:type\", \"telescope:type\", \"telescope:diameter\", \"castle_type\", \"sport\", \"information\", \"memorial\", \"artwork_type\", \"vending\", \"shop\", \"is_building\", \"operator\", \"ref\", \"way_area\", \"way_pixels\" FROM (SELECT
     *
   FROM
   (SELECT -- This subselect allows filtering on the feature column
@@ -1709,6 +1697,7 @@ SELECT ST_AsBinary(way) AS geom, \"name\", \"feature\", \"access\", \"score\", \
             THEN CONCAT(ROUND((tags->'height')::NUMERIC)::TEXT, U&'\\00A0', 'm') ELSE NULL END
           )
         ) AS name,
+        tags->'parking' as \"parking\",
       COALESCE(
         'aeroway_' || CASE WHEN aeroway IN ('gate', 'apron', 'helipad', 'aerodrome') THEN aeroway ELSE NULL END,
         'tourism_' || CASE WHEN tourism IN ('alpine_hut', 'apartment', 'artwork', 'camp_site', 'caravan_site', 'chalet', 'gallery', 'guest_house',
@@ -1762,7 +1751,7 @@ SELECT ST_AsBinary(way) AS geom, \"name\", \"feature\", \"access\", \"score\", \
         'amenity_' || CASE WHEN amenity IN ('bicycle_parking', 'motorcycle_parking') THEN amenity ELSE NULL END,
         'amenity_' || CASE WHEN amenity IN ('parking') AND (tags->'parking' NOT IN ('underground') OR (tags->'parking') IS NULL) THEN amenity ELSE NULL END,
         'amenity_' || CASE WHEN amenity IN ('parking_entrance')
-                                AND tags->'parking' IN ('underground')
+                                AND tags->'parking' IN ('multi-storey', 'underground')
                                 AND (access IS NULL OR access NOT IN ('private', 'no'))
                                 AND way_area IS NULL
                            THEN amenity ELSE NULL END,
@@ -2038,20 +2027,21 @@ geometry_type = "Polygon"
 name = "roads-area-text-name"
 sql = """
 SELECT ST_AsBinary(way) AS geom, \"way_pixels\", \"highway\", \"place\", \"leisure\", \"name\" FROM (SELECT
-    way,
+    ST_PointOnSurface(way) AS way,
     way_area/NULLIF(POW(!scale_denominator!*0.001*0.28,2),0) AS way_pixels,
     highway,
     place,
     leisure,
     name
   FROM planet_osm_polygon
-  WHERE highway IN ('residential', 'unclassified', 'pedestrian', 'service', 'footway', 'cycleway', 'living_street', 'track', 'path', 'platform')
-    OR (railway IN ('platform')
-        AND (tags->'location' NOT IN ('underground') OR (tags->'location') IS NULL)
-        AND (tunnel NOT IN ('yes', 'building_passage') OR tunnel IS NULL)
-        AND (covered NOT IN ('yes') OR covered IS NULL))
-    OR (place IN ('square')
-        AND (leisure IS NULL OR NOT leisure IN ('park', 'recreation_ground', 'garden')))
+  WHERE way && !bbox!
+    AND (highway IN ('residential', 'unclassified', 'pedestrian', 'service', 'footway', 'cycleway', 'living_street', 'track', 'path', 'platform')
+      OR (railway IN ('platform')
+          AND (tags->'location' NOT IN ('underground') OR (tags->'location') IS NULL)
+          AND (tunnel NOT IN ('yes', 'building_passage') OR tunnel IS NULL)
+          AND (covered NOT IN ('yes') OR covered IS NULL))
+      OR (place IN ('square')
+          AND (leisure IS NULL OR NOT leisure IN ('park', 'recreation_ground', 'garden'))))
     AND name IS NOT NULL
   ORDER BY way_area DESC
 ) AS roads_area_text_name WHERE way && !BBOX!"""
@@ -2211,7 +2201,7 @@ geometry_type = "Polygon"
 name = "text-poly-low-zoom"
 sql = """
 SELECT ST_AsBinary(way) AS geom, \"way_pixels\", \"feature\", \"name\", \"is_building\" FROM (SELECT
-    way,
+    ST_PointOnSurface(way) AS way,
     way_area/NULLIF(POW(!scale_denominator!*0.001*0.28,2),0) AS way_pixels,
     COALESCE(
       'landuse_' || CASE WHEN landuse IN ('forest', 'military', 'farmland') THEN landuse ELSE NULL END,
@@ -2228,7 +2218,8 @@ SELECT ST_AsBinary(way) AS geom, \"way_pixels\", \"feature\", \"name\", \"is_bui
     name,
     CASE WHEN building = 'no' OR building IS NULL THEN 'no' ELSE 'yes' END AS is_building -- always no with the where conditions
   FROM planet_osm_polygon
-  WHERE (landuse IN ('forest', 'military', 'farmland')
+  WHERE way && !bbox!
+    AND (landuse IN ('forest', 'military', 'farmland')
       OR military IN ('danger_area')
       OR \"natural\" IN ('wood', 'glacier', 'sand', 'scree', 'shingle', 'bare_rock', 'water', 'bay', 'strait')
       OR \"place\" IN ('island')
@@ -2267,7 +2258,7 @@ geometry_fieldname = "geom"
 geometry_type = "Point"
 name = "text-point"
 sql = """
-SELECT ST_AsBinary(way) AS geom, \"name\", \"feature\", \"access\", \"score\", \"religion\", \"denomination\", \"generator:source\", \"height\", \"location\", \"icao\", \"iata\", \"office\", \"recycling_type\", \"tower:construction\", \"tower:type\", \"telescope:type\", \"telescope:diameter\", \"castle_type\", \"sport\", \"information\", \"memorial\", \"artwork_type\", \"vending\", \"shop\", \"is_building\", \"operator\", \"ref\", \"way_area\", \"way_pixels\" FROM (SELECT
+SELECT ST_AsBinary(way) AS geom, \"name\", \"parking\", \"feature\", \"access\", \"score\", \"religion\", \"denomination\", \"generator:source\", \"height\", \"location\", \"icao\", \"iata\", \"office\", \"recycling_type\", \"tower:construction\", \"tower:type\", \"telescope:type\", \"telescope:diameter\", \"castle_type\", \"sport\", \"information\", \"memorial\", \"artwork_type\", \"vending\", \"shop\", \"is_building\", \"operator\", \"ref\", \"way_area\", \"way_pixels\" FROM (SELECT
     *
   FROM
   (SELECT -- This subselect allows filtering on the feature column
@@ -2288,6 +2279,7 @@ SELECT ST_AsBinary(way) AS geom, \"name\", \"feature\", \"access\", \"score\", \
             THEN CONCAT(ROUND((tags->'height')::NUMERIC)::TEXT, U&'\\00A0', 'm') ELSE NULL END
           )
         ) AS name,
+        tags->'parking' as \"parking\",
       COALESCE(
         'aeroway_' || CASE WHEN aeroway IN ('gate', 'apron', 'helipad', 'aerodrome') THEN aeroway ELSE NULL END,
         'tourism_' || CASE WHEN tourism IN ('alpine_hut', 'apartment', 'artwork', 'camp_site', 'caravan_site', 'chalet', 'gallery', 'guest_house',
@@ -2341,7 +2333,7 @@ SELECT ST_AsBinary(way) AS geom, \"name\", \"feature\", \"access\", \"score\", \
         'amenity_' || CASE WHEN amenity IN ('bicycle_parking', 'motorcycle_parking') THEN amenity ELSE NULL END,
         'amenity_' || CASE WHEN amenity IN ('parking') AND (tags->'parking' NOT IN ('underground') OR (tags->'parking') IS NULL) THEN amenity ELSE NULL END,
         'amenity_' || CASE WHEN amenity IN ('parking_entrance')
-                                AND tags->'parking' IN ('underground')
+                                AND tags->'parking' IN ('multi-storey', 'underground')
                                 AND (access IS NULL OR access NOT IN ('private', 'no'))
                                 AND way_area IS NULL
                            THEN amenity ELSE NULL END,

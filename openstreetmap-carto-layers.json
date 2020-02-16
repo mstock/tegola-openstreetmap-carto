@@ -47,7 +47,6 @@
       "fields" : [
          "int_intermittent",
          "landuse",
-         "name",
          "natural",
          "waterway"
       ],
@@ -68,14 +67,12 @@
    },
    {
       "fields" : [
-         "name",
          "waterway"
       ],
       "name" : "water-barriers-line"
    },
    {
       "fields" : [
-         "name",
          "waterway"
       ],
       "name" : "water-barriers-poly"
@@ -106,8 +103,7 @@
    },
    {
       "fields" : [
-         "man_made",
-         "name"
+         "man_made"
       ],
       "name" : "bridge"
    },
@@ -146,7 +142,6 @@
    },
    {
       "fields" : [
-         "name",
          "tourism"
       ],
       "name" : "tourism-boundary"
@@ -155,7 +150,7 @@
       "fields" : [
          "feature"
       ],
-      "name" : "line-barriers"
+      "name" : "barriers"
    },
    {
       "fields" : [
@@ -163,12 +158,6 @@
          "natural"
       ],
       "name" : "cliffs"
-   },
-   {
-      "fields" : [
-         "feature"
-      ],
-      "name" : "area-barriers"
    },
    {
       "fields" : [],
@@ -253,7 +242,6 @@
          "bridge",
          "int_intermittent",
          "int_tunnel",
-         "name",
          "waterway"
       ],
       "name" : "waterway-bridges"
@@ -321,7 +309,6 @@
    {
       "fields" : [
          "boundary",
-         "name",
          "protect_class"
       ],
       "name" : "protected-areas"
@@ -414,6 +401,7 @@
          "name",
          "office",
          "operator",
+         "parking",
          "recycling_type",
          "ref",
          "religion",
@@ -551,6 +539,7 @@
          "name",
          "office",
          "operator",
+         "parking",
          "recycling_type",
          "ref",
          "religion",
