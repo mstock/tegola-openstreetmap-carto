@@ -8,6 +8,10 @@ In order to use this sample, you'll need a render database setup according to th
 
     PGHOST=localhost PGPORT=5432 PGUSER=gis PGPASSWORD=gis PGDATABASE=gis tegola serve --config openstreetmap-carto.toml
 
+The Tangram-based rendering and the `docker-compose` setup need the Git submodule in the `openstreetmap-carto` directory, so you have to make sure it is present and up-to-date as well:
+
+    git submodule update --init
+
 ## Tangram-based rendering
 
 This repository also contains a very basic Tangram style below `tangram` which can be used to render some data in the web browser. This is best done by serving the `tangram` directory with some local web server and then opening the contained `index.html` file in a browser. If your render database contains data from Liechtenstein, you should see some buildings, colorful streets, green trees and some POIs. If you don't have data from Liechtenstein, you can change the parameters to the `map.setView()` call in `index.html`.
