@@ -376,15 +376,15 @@ min_zoom = 14
 provider_layer = "osm.text-low-priority"
 
 [[providers]]
-database = "gis"
-host = "localhost"
+database = "${PGDATABASE}"
+host = "${PGHOST}"
 max_connections = 100
 name = "osm"
-password = "gis"
-port = 5432
+password = "${PGPASSWORD}"
+port = "${PGPORT}"
 srid = 3857
 type = "postgis"
-user = "gis"
+user = "${PGUSER}"
 
 [[providers.layers]]
 geometry_fieldname = "geom"

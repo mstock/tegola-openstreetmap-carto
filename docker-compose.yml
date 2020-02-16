@@ -1,0 +1,28 @@
+---
+version: '2'
+services:
+  tegola:
+    image: gospatial/tegola:latest
+    depends_on:
+      - db
+    volumes:
+      - ..:/opt/tegola_config
+    ports:
+      - "127.0.0.1:8080:8080"
+    entrypoint:
+      - /opt/tegola
+      - serve
+      - --config
+      - /opt/tegola_config/openstreetmap-carto.toml
+    environment:
+      - PGHOST=db
+      - PGPORT=5432
+      - PGUSER=postgres
+      - PGDATABASE=gis
+      - PGPASSWORD=
+  webserver:
+    image: nginx
+    volumes:
+      - ..:/usr/share/nginx/html
+    ports:
+      - "127.0.0.1:3000:80"
